@@ -1,3 +1,24 @@
+### Changes to https://github.com/jwilder/docker-discover
+
+`docker-discover` expects etcd configuration in the following format:
+
+      etcdctl set /backends/service_name/1/container_a "127.0.0.1:8000" --ttl 60
+      etcdctl set /backends/service_name/1/container_b "127.0.0.2:8000" --ttl 60
+      etcdctl set /backends/service_name/1/port "8005" --ttl 60
+      etcdctl set /backends/service_name/2/container_a "127.0.0.1:8001" --ttl 60
+      etcdctl set /backends/service_name/2/container_b "127.0.0.2:8001" --ttl 60
+      etcdctl set /backends/service_name/2/port "8006" --ttl 60
+
+rather than the original:
+
+      etcdctl set /backends/service_name/container_a "127.0.0.1:8000" --ttl 60
+      etcdctl set /backends/service_name/container_b "127.0.0.2:8000" --ttl 60
+      etcdctl set /backends/service_name/port "8005" --ttl 60
+
+which basically provides multi-port support.
+
+------
+
 docker-discover is a service discovery container that leverages haproxy and etcd.  When running,
 it sets up listeners for remote docker containers discovered via etcd.  It works in tandem with
 docker-register.

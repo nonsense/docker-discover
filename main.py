@@ -40,11 +40,13 @@ def get_services():
 
     for i in backends.children:
 
-        if i.key[1:].count("/") != 2:
+        if i.key[1:].count("/") != 3:
             continue
 
-        ignore, service, container = i.key[1:].split("/")
-        endpoints = services.setdefault(service, dict(port="", backends=[]))
+        ignore, service, service_number, container = i.key[1:].split("/")
+        service_full_name = "%s_%s" %(service, service_number)
+
+        endpoints = services.setdefault(service_full_name, dict(port="", backends=[]))
         if container == "port":
             endpoints["port"] = i.value
             continue
